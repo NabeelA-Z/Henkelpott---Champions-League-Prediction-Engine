@@ -1,0 +1,1747 @@
+{
+ "generated": "2026-10-02",
+ "season": "2026/27",
+ "params": {
+  "mu": 0.08506,
+  "home": 0.33017,
+  "homeDomestic": 0.21115,
+  "rho": -0.05309,
+  "xi": 0.003,
+  "sigma": 0.9,
+  "euroWeight": 1.0
+ },
+ "clubs": [
+  {
+   "code": "PSG",
+   "name": "Paris Saint-Germain",
+   "short": "Paris SG",
+   "pot": 1,
+   "country": "FRA",
+   "colors": [
+    "#1b2a5c",
+    "#d6293b"
+   ],
+   "att": 1.0881,
+   "def": 0.8464,
+   "elo": 1752,
+   "matches": 444,
+   "seedOrder": 0
+  },
+  {
+   "code": "BAY",
+   "name": "Bayern Munich",
+   "short": "Bayern",
+   "pot": 1,
+   "country": "GER",
+   "colors": [
+    "#d4122a",
+    "#ffffff"
+   ],
+   "att": 1.258,
+   "def": 0.73,
+   "elo": 1875,
+   "matches": 434,
+   "seedOrder": 1
+  },
+  {
+   "code": "RMA",
+   "name": "Real Madrid",
+   "short": "Real Madrid",
+   "pot": 1,
+   "country": "ESP",
+   "colors": [
+    "#f2f2f2",
+    "#2a3f8f"
+   ],
+   "att": 0.9928,
+   "def": 0.7508,
+   "elo": 1683,
+   "matches": 483,
+   "seedOrder": 2
+  },
+  {
+   "code": "LIV",
+   "name": "Liverpool",
+   "short": "Liverpool",
+   "pot": 1,
+   "country": "ENG",
+   "colors": [
+    "#c8102e",
+    "#f6eb61"
+   ],
+   "att": 0.9348,
+   "def": 0.826,
+   "elo": 1616,
+   "matches": 445,
+   "seedOrder": 3
+  },
+  {
+   "code": "INT",
+   "name": "Inter",
+   "short": "Inter",
+   "pot": 1,
+   "country": "ITA",
+   "colors": [
+    "#0a3f9c",
+    "#111111"
+   ],
+   "att": 0.9415,
+   "def": 0.6281,
+   "elo": 1666,
+   "matches": 420,
+   "seedOrder": 4
+  },
+  {
+   "code": "MCI",
+   "name": "Manchester City",
+   "short": "Man City",
+   "pot": 1,
+   "country": "ENG",
+   "colors": [
+    "#6cabdd",
+    "#1c2c5b"
+   ],
+   "att": 1.0818,
+   "def": 0.9313,
+   "elo": 1748,
+   "matches": 465,
+   "seedOrder": 5
+  },
+  {
+   "code": "ARS",
+   "name": "Arsenal",
+   "short": "Arsenal",
+   "pot": 1,
+   "country": "ENG",
+   "colors": [
+    "#db0007",
+    "#ffffff"
+   ],
+   "att": 0.9593,
+   "def": 1.3004,
+   "elo": 1818,
+   "matches": 425,
+   "seedOrder": 6
+  },
+  {
+   "code": "BAR",
+   "name": "Barcelona",
+   "short": "Barcelona",
+   "pot": 1,
+   "country": "ESP",
+   "colors": [
+    "#a50044",
+    "#004d98"
+   ],
+   "att": 1.2054,
+   "def": 0.6764,
+   "elo": 1762,
+   "matches": 465,
+   "seedOrder": 7
+  },
+  {
+   "code": "ATM",
+   "name": "Atlético Madrid",
+   "short": "Atlético",
+   "pot": 1,
+   "country": "ESP",
+   "colors": [
+    "#cb3524",
+    "#ffffff"
+   ],
+   "att": 0.8359,
+   "def": 0.6443,
+   "elo": 1556,
+   "matches": 458,
+   "seedOrder": 8
+  },
+  {
+   "code": "BVB",
+   "name": "Borussia Dortmund",
+   "short": "Dortmund",
+   "pot": 2,
+   "country": "GER",
+   "colors": [
+    "#fde100",
+    "#111111"
+   ],
+   "att": 0.8158,
+   "def": 0.6233,
+   "elo": 1639,
+   "matches": 406,
+   "seedOrder": 9
+  },
+  {
+   "code": "ROM",
+   "name": "Roma",
+   "short": "Roma",
+   "pot": 2,
+   "country": "ITA",
+   "colors": [
+    "#8e1f2f",
+    "#f0bc42"
+   ],
+   "att": 0.6773,
+   "def": 0.7735,
+   "elo": 1616,
+   "matches": 444,
+   "seedOrder": 10
+  },
+  {
+   "code": "SCP",
+   "name": "Sporting CP",
+   "short": "Sporting",
+   "pot": 2,
+   "country": "POR",
+   "colors": [
+    "#008057",
+    "#ffffff"
+   ],
+   "att": 0.764,
+   "def": 0.5752,
+   "elo": 1631,
+   "matches": 378,
+   "seedOrder": 11
+  },
+  {
+   "code": "AVL",
+   "name": "Aston Villa",
+   "short": "Aston Villa",
+   "pot": 2,
+   "country": "ENG",
+   "colors": [
+    "#670e36",
+    "#95bfe5"
+   ],
+   "att": 0.8251,
+   "def": 0.6606,
+   "elo": 1571,
+   "matches": 296,
+   "seedOrder": 12
+  },
+  {
+   "code": "POR",
+   "name": "Porto",
+   "short": "Porto",
+   "pot": 2,
+   "country": "POR",
+   "colors": [
+    "#00428c",
+    "#ffffff"
+   ],
+   "att": 0.5367,
+   "def": 0.7425,
+   "elo": 1566,
+   "matches": 392,
+   "seedOrder": 13
+  },
+  {
+   "code": "MUN",
+   "name": "Manchester United",
+   "short": "Man United",
+   "pot": 2,
+   "country": "ENG",
+   "colors": [
+    "#da291c",
+    "#111111"
+   ],
+   "att": 0.894,
+   "def": 0.694,
+   "elo": 1620,
+   "matches": 428,
+   "seedOrder": 14
+  },
+  {
+   "code": "BRU",
+   "name": "Club Brugge",
+   "short": "Club Brugge",
+   "pot": 2,
+   "country": "BEL",
+   "colors": [
+    "#0067b1",
+    "#111111"
+   ],
+   "att": 0.6925,
+   "def": 0.3679,
+   "elo": 1525,
+   "matches": 397,
+   "seedOrder": 15
+  },
+  {
+   "code": "BET",
+   "name": "Real Betis",
+   "short": "Betis",
+   "pot": 2,
+   "country": "ESP",
+   "colors": [
+    "#00954c",
+    "#ffffff"
+   ],
+   "att": 0.5988,
+   "def": 0.5554,
+   "elo": 1561,
+   "matches": 393,
+   "seedOrder": 16
+  },
+  {
+   "code": "PSV",
+   "name": "PSV Eindhoven",
+   "short": "PSV",
+   "pot": 2,
+   "country": "NED",
+   "colors": [
+    "#ed1c24",
+    "#ffffff"
+   ],
+   "att": 0.8944,
+   "def": 0.2436,
+   "elo": 1553,
+   "matches": 382,
+   "seedOrder": 17
+  },
+  {
+   "code": "FEY",
+   "name": "Feyenoord",
+   "short": "Feyenoord",
+   "pot": 3,
+   "country": "NED",
+   "colors": [
+    "#e2001a",
+    "#ffffff"
+   ],
+   "att": 0.6175,
+   "def": 0.283,
+   "elo": 1446,
+   "matches": 362,
+   "seedOrder": 18
+  },
+  {
+   "code": "LIL",
+   "name": "Lille",
+   "short": "Lille",
+   "pot": 3,
+   "country": "FRA",
+   "colors": [
+    "#e01e13",
+    "#20325f"
+   ],
+   "att": 0.6115,
+   "def": 0.7417,
+   "elo": 1478,
+   "matches": 372,
+   "seedOrder": 19
+  },
+  {
+   "code": "BOD",
+   "name": "Bodø/Glimt",
+   "short": "Bodø/Glimt",
+   "pot": 3,
+   "country": "NOR",
+   "colors": [
+    "#f7d417",
+    "#111111"
+   ],
+   "att": 0.6856,
+   "def": 0.3939,
+   "elo": 1578,
+   "matches": 356,
+   "seedOrder": 20
+  },
+  {
+   "code": "NAP",
+   "name": "Napoli",
+   "short": "Napoli",
+   "pot": 3,
+   "country": "ITA",
+   "colors": [
+    "#12a0d7",
+    "#ffffff"
+   ],
+   "att": 0.5141,
+   "def": 0.653,
+   "elo": 1515,
+   "matches": 418,
+   "seedOrder": 21
+  },
+  {
+   "code": "RBL",
+   "name": "RB Leipzig",
+   "short": "Leipzig",
+   "pot": 3,
+   "country": "GER",
+   "colors": [
+    "#dd0741",
+    "#ffffff"
+   ],
+   "att": 0.6687,
+   "def": 0.4041,
+   "elo": 1469,
+   "matches": 371,
+   "seedOrder": 22
+  },
+  {
+   "code": "VIL",
+   "name": "Villarreal",
+   "short": "Villarreal",
+   "pot": 3,
+   "country": "ESP",
+   "colors": [
+    "#ffe667",
+    "#005187"
+   ],
+   "att": 0.7611,
+   "def": 0.3864,
+   "elo": 1423,
+   "matches": 401,
+   "seedOrder": 23
+  },
+  {
+   "code": "FEN",
+   "name": "Fenerbahçe",
+   "short": "Fenerbahçe",
+   "pot": 3,
+   "country": "TUR",
+   "colors": [
+    "#163962",
+    "#ffed00"
+   ],
+   "att": 0.5941,
+   "def": 0.2372,
+   "elo": 1459,
+   "matches": 377,
+   "seedOrder": 24
+  },
+  {
+   "code": "SHA",
+   "name": "Shakhtar Donetsk",
+   "short": "Shakhtar",
+   "pot": 3,
+   "country": "UKR",
+   "colors": [
+    "#f26522",
+    "#111111"
+   ],
+   "att": 0.2556,
+   "def": 0.3938,
+   "elo": 1430,
+   "matches": 137,
+   "seedOrder": 25
+  },
+  {
+   "code": "GAL",
+   "name": "Galatasaray",
+   "short": "Galatasaray",
+   "pot": 3,
+   "country": "TUR",
+   "colors": [
+    "#a90432",
+    "#fdb912"
+   ],
+   "att": 0.5588,
+   "def": 0.2651,
+   "elo": 1441,
+   "matches": 389,
+   "seedOrder": 26
+  },
+  {
+   "code": "SLA",
+   "name": "Slavia Prague",
+   "short": "Slavia",
+   "pot": 4,
+   "country": "CZE",
+   "colors": [
+    "#d81e2c",
+    "#ffffff"
+   ],
+   "att": 0.345,
+   "def": 0.229,
+   "elo": 1385,
+   "matches": 204,
+   "seedOrder": 27
+  },
+  {
+   "code": "SLO",
+   "name": "Slovan Bratislava",
+   "short": "Slovan",
+   "pot": 4,
+   "country": "SVK",
+   "colors": [
+    "#5ba3db",
+    "#ffffff"
+   ],
+   "att": 0.2742,
+   "def": -0.1214,
+   "elo": 1358,
+   "matches": 109,
+   "seedOrder": 28
+  },
+  {
+   "code": "STU",
+   "name": "Stuttgart",
+   "short": "Stuttgart",
+   "pot": 4,
+   "country": "GER",
+   "colors": [
+    "#e32219",
+    "#ffffff"
+   ],
+   "att": 0.7362,
+   "def": 0.3851,
+   "elo": 1535,
+   "matches": 285,
+   "seedOrder": 29
+  },
+  {
+   "code": "AEK",
+   "name": "AEK Athens",
+   "short": "AEK",
+   "pot": 4,
+   "country": "GRE",
+   "colors": [
+    "#f6d000",
+    "#111111"
+   ],
+   "att": 0.2845,
+   "def": 0.5051,
+   "elo": 1494,
+   "matches": 338,
+   "seedOrder": 30
+  },
+  {
+   "code": "LAS",
+   "name": "LASK",
+   "short": "LASK",
+   "pot": 4,
+   "country": "AUT",
+   "colors": [
+    "#111111",
+    "#ffffff"
+   ],
+   "att": 0.322,
+   "def": 0.0874,
+   "elo": 1428,
+   "matches": 329,
+   "seedOrder": 31
+  },
+  {
+   "code": "COM",
+   "name": "Como",
+   "short": "Como",
+   "pot": 4,
+   "country": "ITA",
+   "colors": [
+    "#1c5fae",
+    "#ffffff"
+   ],
+   "att": 0.6909,
+   "def": 0.661,
+   "elo": 1571,
+   "matches": 82,
+   "seedOrder": 32
+  },
+  {
+   "code": "RCL",
+   "name": "Lens",
+   "short": "Lens",
+   "pot": 4,
+   "country": "FRA",
+   "colors": [
+    "#fcd116",
+    "#e2001a"
+   ],
+   "att": 0.7829,
+   "def": 0.6057,
+   "elo": 1483,
+   "matches": 232,
+   "seedOrder": 33
+  },
+  {
+   "code": "VIK",
+   "name": "Viking",
+   "short": "Viking",
+   "pot": 4,
+   "country": "NOR",
+   "colors": [
+    "#00529f",
+    "#ffffff"
+   ],
+   "att": 0.5916,
+   "def": 0.2477,
+   "elo": 1501,
+   "matches": 296,
+   "seedOrder": 34
+  },
+  {
+   "code": "SAB",
+   "name": "Sabah",
+   "short": "Sabah",
+   "pot": 4,
+   "country": "AZE",
+   "colors": [
+    "#0b5f3c",
+    "#e8b20e"
+   ],
+   "att": -0.1809,
+   "def": -0.2123,
+   "elo": 1182,
+   "matches": 83,
+   "seedOrder": 35
+  }
+ ],
+ "fixtures": [
+  {
+   "md": 1,
+   "date": "2026-09-08",
+   "home": "AEK",
+   "away": "LAS",
+   "hg": 1,
+   "ag": 0
+  },
+  {
+   "md": 1,
+   "date": "2026-09-08",
+   "home": "BRU",
+   "away": "AVL",
+   "hg": 2,
+   "ag": 3
+  },
+  {
+   "md": 1,
+   "date": "2026-09-08",
+   "home": "BVB",
+   "away": "VIL",
+   "hg": 3,
+   "ag": 2
+  },
+  {
+   "md": 1,
+   "date": "2026-09-08",
+   "home": "POR",
+   "away": "MCI",
+   "hg": 0,
+   "ag": 2
+  },
+  {
+   "md": 1,
+   "date": "2026-09-08",
+   "home": "LIL",
+   "away": "BET",
+   "hg": 2,
+   "ag": 3
+  },
+  {
+   "md": 1,
+   "date": "2026-09-08",
+   "home": "RMA",
+   "away": "INT",
+   "hg": 2,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-09",
+   "home": "BAR",
+   "away": "FEY",
+   "hg": 5,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-09",
+   "home": "STU",
+   "away": "VIK",
+   "hg": 3,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-09",
+   "home": "LIV",
+   "away": "ATM",
+   "hg": 2,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-09",
+   "home": "PSG",
+   "away": "SLO",
+   "hg": 6,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-09",
+   "home": "SCP",
+   "away": "GAL",
+   "hg": 3,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-09",
+   "home": "NAP",
+   "away": "ARS",
+   "hg": 0,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-10",
+   "home": "FEN",
+   "away": "ROM",
+   "hg": 1,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-10",
+   "home": "PSV",
+   "away": "SHA",
+   "hg": 1,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-10",
+   "home": "COM",
+   "away": "RBL",
+   "hg": 4,
+   "ag": 1
+  },
+  {
+   "md": 1,
+   "date": "2026-09-10",
+   "home": "BAY",
+   "away": "BOD",
+   "hg": 5,
+   "ag": 0
+  },
+  {
+   "md": 1,
+   "date": "2026-09-10",
+   "home": "MUN",
+   "away": "SAB",
+   "hg": 4,
+   "ag": 0
+  },
+  {
+   "md": 1,
+   "date": "2026-09-10",
+   "home": "SLA",
+   "away": "RCL",
+   "hg": 2,
+   "ag": 3
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "RCL",
+   "away": "SCP"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "SAB",
+   "away": "SLA"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "ARS",
+   "away": "LIL"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "ATM",
+   "away": "MUN"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "INT",
+   "away": "BRU"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "GAL",
+   "away": "BAR"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "RBL",
+   "away": "PSV"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "VIK",
+   "away": "BAY"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-13",
+   "home": "VIL",
+   "away": "NAP"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "FEY",
+   "away": "COM"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "LAS",
+   "away": "LIV"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "ROM",
+   "away": "RMA"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "AVL",
+   "away": "FEN"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "SHA",
+   "away": "AEK"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "BOD",
+   "away": "BVB"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "MCI",
+   "away": "PSG"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "BET",
+   "away": "POR"
+  },
+  {
+   "md": 2,
+   "date": "2026-10-14",
+   "home": "SLO",
+   "away": "STU"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "FEN",
+   "away": "SLA"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "SAB",
+   "away": "BVB"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "ROM",
+   "away": "SLO"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "POR",
+   "away": "PSV"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "LIV",
+   "away": "VIL"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "MCI",
+   "away": "AEK"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "PSG",
+   "away": "BAR"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "NAP",
+   "away": "BOD"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-20",
+   "home": "STU",
+   "away": "ATM"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "COM",
+   "away": "MUN"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "LIL",
+   "away": "GAL"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "AVL",
+   "away": "VIK"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "BRU",
+   "away": "RCL"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "BAY",
+   "away": "ARS"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "INT",
+   "away": "SHA"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "RMA",
+   "away": "RBL"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "BET",
+   "away": "FEY"
+  },
+  {
+   "md": 3,
+   "date": "2026-10-21",
+   "home": "SCP",
+   "away": "LAS"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "SHA",
+   "away": "SCP"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "GAL",
+   "away": "STU"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "ATM",
+   "away": "BAY"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "BAR",
+   "away": "AVL"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "FEY",
+   "away": "INT"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "BOD",
+   "away": "LIL"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "LAS",
+   "away": "SLO"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "MUN",
+   "away": "ROM"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-03",
+   "home": "VIL",
+   "away": "PSG"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "AEK",
+   "away": "RMA"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "FEN",
+   "away": "LIV"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "BVB",
+   "away": "BET"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "POR",
+   "away": "NAP"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "PSV",
+   "away": "BRU"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "RBL",
+   "away": "MCI"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "RCL",
+   "away": "COM"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "SLA",
+   "away": "ARS"
+  },
+  {
+   "md": 4,
+   "date": "2026-11-04",
+   "home": "VIK",
+   "away": "SAB"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "BOD",
+   "away": "LAS"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "GAL",
+   "away": "AVL"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "ARS",
+   "away": "BVB"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "COM",
+   "away": "AEK"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "FEY",
+   "away": "POR"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "MCI",
+   "away": "NAP"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "RBL",
+   "away": "RCL"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "RMA",
+   "away": "PSV"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-24",
+   "home": "SLO",
+   "away": "BET"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "SAB",
+   "away": "BAR"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "SLA",
+   "away": "VIL"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "ATM",
+   "away": "VIK"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "BRU",
+   "away": "LIV"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "INT",
+   "away": "STU"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "SHA",
+   "away": "FEN"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "LIL",
+   "away": "BAY"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "PSG",
+   "away": "ROM"
+  },
+  {
+   "md": 5,
+   "date": "2026-11-25",
+   "home": "SCP",
+   "away": "MUN"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "VIK",
+   "away": "FEY"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "VIL",
+   "away": "SAB"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "AEK",
+   "away": "GAL"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "ROM",
+   "away": "SCP"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "AVL",
+   "away": "PSG"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "BAR",
+   "away": "MCI"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "BAY",
+   "away": "SLA"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "MUN",
+   "away": "RBL"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-08",
+   "home": "NAP",
+   "away": "BRU"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "BET",
+   "away": "COM"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "SLO",
+   "away": "SHA"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "ARS",
+   "away": "RMA"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "BVB",
+   "away": "INT"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "LAS",
+   "away": "FEN"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "LIV",
+   "away": "POR"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "RCL",
+   "away": "BOD"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "PSV",
+   "away": "ATM"
+  },
+  {
+   "md": 6,
+   "date": "2026-12-09",
+   "home": "STU",
+   "away": "LIL"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "BOD",
+   "away": "ATM"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "GAL",
+   "away": "FEY"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "AEK",
+   "away": "ROM"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "AVL",
+   "away": "BVB"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "INT",
+   "away": "LIV"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "POR",
+   "away": "SLA"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "LIL",
+   "away": "SLO"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "RMA",
+   "away": "LAS"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-19",
+   "home": "STU",
+   "away": "BRU"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "FEN",
+   "away": "VIL"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "SAB",
+   "away": "NAP"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "COM",
+   "away": "PSG"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "MUN",
+   "away": "BAY"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "RBL",
+   "away": "SHA"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "RCL",
+   "away": "MCI"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "BET",
+   "away": "ARS"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "SCP",
+   "away": "BAR"
+  },
+  {
+   "md": 7,
+   "date": "2027-01-20",
+   "home": "VIK",
+   "away": "PSV"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "ARS",
+   "away": "SAB"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "ROM",
+   "away": "LIL"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "ATM",
+   "away": "FEN"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "BVB",
+   "away": "AEK"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "BRU",
+   "away": "BOD"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "BAY",
+   "away": "BET"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "BAR",
+   "away": "COM"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "SHA",
+   "away": "RMA"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "FEY",
+   "away": "RBL"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "LAS",
+   "away": "POR"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "LIV",
+   "away": "RCL"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "MCI",
+   "away": "SCP"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "PSG",
+   "away": "GAL"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "PSV",
+   "away": "STU"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "SLA",
+   "away": "AVL"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "NAP",
+   "away": "VIK"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "VIL",
+   "away": "MUN"
+  },
+  {
+   "md": 8,
+   "date": "2027-01-27",
+   "home": "SLO",
+   "away": "INT"
+  }
+ ],
+ "validation": {
+  "seasons": [
+   {
+    "season": "2021/22",
+    "model": {
+     "rps": 0.19332555215457628,
+     "brier": 0.5509350537770827,
+     "logloss": 0.9331608612832076,
+     "n": 125
+    },
+    "elo": {
+     "rps": 0.1853928751435462,
+     "brier": 0.5345055950748194,
+     "logloss": 0.9095038592987823,
+     "n": 125
+    }
+   },
+   {
+    "season": "2022/23",
+    "model": {
+     "rps": 0.1877192827711231,
+     "brier": 0.5446011731903474,
+     "logloss": 0.9271552404879384,
+     "n": 125
+    },
+    "elo": {
+     "rps": 0.18879475257795017,
+     "brier": 0.5424079344097351,
+     "logloss": 0.9217196143016342,
+     "n": 125
+    }
+   },
+   {
+    "season": "2023/24",
+    "model": {
+     "rps": 0.18817845573628203,
+     "brier": 0.5420139784777894,
+     "logloss": 0.919688866108443,
+     "n": 125
+    },
+    "elo": {
+     "rps": 0.18778549775916362,
+     "brier": 0.5433794821996705,
+     "logloss": 0.9209275120261563,
+     "n": 125
+    }
+   },
+   {
+    "season": "2024/25",
+    "model": {
+     "rps": 0.21608115664344532,
+     "brier": 0.5602817717620215,
+     "logloss": 0.954063426912293,
+     "n": 189
+    },
+    "elo": {
+     "rps": 0.23045619408817036,
+     "brier": 0.5968089052825344,
+     "logloss": 1.009313147965978,
+     "n": 189
+    }
+   },
+   {
+    "season": "2025/26",
+    "model": {
+     "rps": 0.20209823580095934,
+     "brier": 0.5509053353132217,
+     "logloss": 0.935019095622454,
+     "n": 189
+    },
+    "elo": {
+     "rps": 0.20656382564444326,
+     "brier": 0.565832381923755,
+     "logloss": 0.960237209938438,
+     "n": 189
+    }
+   }
+  ],
+  "overall": {
+   "model": {
+    "rps": 0.1994539395813282,
+    "brier": 0.5507412203424614,
+    "logloss": 0.9356403954103796,
+    "n": 753
+   },
+   "elo": {
+    "rps": 0.20297931529156238,
+    "brier": 0.5607912745584552,
+    "logloss": 0.9512136664638197,
+    "n": 753
+   },
+   "uniform": {
+    "rps": 0.2470119521912351,
+    "brier": 0.6666666666666667,
+    "logloss": 1.0986122886681098,
+    "n": 753
+   }
+  },
+  "rpsImprovementVsElo": 0.017368152538943558,
+  "ece": 0.023213886132181748,
+  "eceElo": 0.0327817996163981,
+  "calibration": [
+   {
+    "p": 0.062,
+    "o": 0.0763,
+    "n": 131
+   },
+   {
+    "p": 0.159,
+    "o": 0.1521,
+    "n": 355
+   },
+   {
+    "p": 0.2497,
+    "o": 0.2266,
+    "n": 821
+   },
+   {
+    "p": 0.3484,
+    "o": 0.3493,
+    "n": 292
+   },
+   {
+    "p": 0.4483,
+    "o": 0.4803,
+    "n": 229
+   },
+   {
+    "p": 0.5447,
+    "o": 0.5988,
+    "n": 172
+   },
+   {
+    "p": 0.643,
+    "o": 0.6957,
+    "n": 138
+   },
+   {
+    "p": 0.7496,
+    "o": 0.6986,
+    "n": 73
+   },
+   {
+    "p": 0.8485,
+    "o": 0.8529,
+    "n": 34
+   },
+   {
+    "p": 0.9346,
+    "o": 0.8571,
+    "n": 14
+   }
+  ],
+  "calibrationElo": [
+   {
+    "p": 0.0687,
+    "o": 0.0459,
+    "n": 109
+   },
+   {
+    "p": 0.1543,
+    "o": 0.1757,
+    "n": 313
+   },
+   {
+    "p": 0.2584,
+    "o": 0.2291,
+    "n": 716
+   },
+   {
+    "p": 0.3306,
+    "o": 0.308,
+    "n": 526
+   },
+   {
+    "p": 0.4493,
+    "o": 0.5067,
+    "n": 223
+   },
+   {
+    "p": 0.5404,
+    "o": 0.6025,
+    "n": 161
+   },
+   {
+    "p": 0.6482,
+    "o": 0.6545,
+    "n": 110
+   },
+   {
+    "p": 0.7489,
+    "o": 0.8525,
+    "n": 61
+   },
+   {
+    "p": 0.842,
+    "o": 0.7941,
+    "n": 34
+   },
+   {
+    "p": 0.914,
+    "o": 1.0,
+    "n": 6
+   }
+  ],
+  "tuning": {
+   "seasons": [
+    "2019/20",
+    "2020/21"
+   ],
+   "chosen": {
+    "xi": 0.003,
+    "sigma": 0.9,
+    "euroWeight": 1.0
+   }
+  }
+ },
+ "data": {
+  "matchesFit": 56002,
+  "teams": 752,
+  "countries": 56,
+  "from": "2015-09-15",
+  "to": "2026-09-21",
+  "byComp": {
+   "UCL": 1515,
+   "UCLQ": 182,
+   "UECL": 576,
+   "UECLQ": 512,
+   "UEL": 815,
+   "UELQ": 162,
+   "dom:AUT": 2040,
+   "dom:AZE": 360,
+   "dom:BEL": 2628,
+   "dom:CZE": 1136,
+   "dom:DEN": 2305,
+   "dom:ENG": 3470,
+   "dom:ESP": 3489,
+   "dom:FRA": 3142,
+   "dom:GER": 2790,
+   "dom:GRE": 2183,
+   "dom:ITA": 3470,
+   "dom:NED": 2743,
+   "dom:NOR": 2582,
+   "dom:POL": 3160,
+   "dom:POR": 2816,
+   "dom:ROU": 3181,
+   "dom:SCO": 2045,
+   "dom:SUI": 2099,
+   "dom:SVK": 387,
+   "dom:SWE": 2592,
+   "dom:TUR": 3142,
+   "dom:UKR": 480
+  }
+ }
+}

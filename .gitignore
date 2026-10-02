@@ -1,0 +1,5 @@
+model/raw/
+__pycache__/
+node_modules/
+app/dist/
+.DS_Store
