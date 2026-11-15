@@ -1,5 +1,5 @@
 import { CalibrationChart } from "../components/season";
-import { Club } from "../components/ui";
+import { Club, PageHead } from "../components/ui";
 import { CLUBS, MODEL } from "../engine/model";
 
 const COMP_LABEL: Record<string, string> = {
@@ -14,22 +14,20 @@ export default function Methodology() {
   const homeX = Math.exp(p.home);
   return (
     <div className="prose" style={{ maxWidth: "none" }}>
-      <div className="kicker">Methodology</div>
-      <h1 style={{ fontSize: "clamp(1.8rem, 4.5vw, 2.8rem)", marginTop: 4 }}>How the engine works</h1>
-      <p className="muted" style={{ maxWidth: "70ch", marginTop: 10 }}>
-        Four steps: results are ingested and fit offline in Python, frozen into a small JSON file, then simulated in your browser. Nothing is fetched when the page loads.
-      </p>
+      <PageHead
+        title="How the engine works"
+        meta="Results are ingested and fit offline in Python, frozen into a small JSON file, then simulated in your browser. Nothing is fetched when the page loads."
+      />
 
-      <div className="pipeline" style={{ marginTop: 20 }}>
+      <div className="pipeline" style={{ marginTop: 28 }}>
         {[
-          ["01", "Ingest", `${d.matchesFit.toLocaleString("en-GB")} club results: ${domestic.length} domestic leagues plus European competitions, ${d.from.slice(0, 4)}–${d.to}.`],
-          ["02", "Fit", "Dixon-Coles goals model with cross-league calibration, exponential time decay and shrinkage priors; Elo alongside as a baseline."],
-          ["03", "Validate", `Season-by-season backtests on ${v.overall.model.n} UCL matches, freezing the model on 1 September of each season.`],
-          ["04", "Simulate", "Seeded Monte Carlo in Web Workers: league phase, UEFA tie-breakers, play-off, fixed bracket, two legs, ET, penalties."],
-        ].map(([n, t, x]) => (
-          <div className="card" key={n}>
-            <div className="n">{n}</div>
-            <h3 style={{ margin: "4px 0 6px" }}>{t}</h3>
+          ["Ingest", `${d.matchesFit.toLocaleString("en-GB")} club results: ${domestic.length} domestic leagues plus European competitions, ${d.from.slice(0, 4)}–${d.to}.`],
+          ["Fit", "Dixon-Coles goals model with cross-league calibration, exponential time decay and shrinkage priors; Elo alongside as a baseline."],
+          ["Validate", `Season-by-season backtests on ${v.overall.model.n} UCL matches, freezing the model on 1 September of each season.`],
+          ["Simulate", "Seeded Monte Carlo in Web Workers: league phase, UEFA tie-breakers, play-off, fixed bracket, two legs, ET, penalties."],
+        ].map(([t, x]) => (
+          <div key={t}>
+            <h3>{t}</h3>
             <p className="small muted" style={{ margin: 0 }}>{x}</p>
           </div>
         ))}
@@ -150,7 +148,7 @@ export default function Methodology() {
         <div className="card">
           <h3>Calibration</h3>
           <p className="small muted">
-            Every predicted outcome probability, binned, against how often it happened. Blue: this model (ECE {(v.ece * 100).toFixed(1)}%). Grey: Elo baseline (ECE {(v.eceElo * 100).toFixed(1)}%).
+            Every predicted outcome probability, binned, against how often it happened. Dark: this model (ECE {(v.ece * 100).toFixed(1)}%). Light: Elo baseline (ECE {(v.eceElo * 100).toFixed(1)}%).
           </p>
           <CalibrationChart model={v.calibration} elo={v.calibrationElo} />
         </div>

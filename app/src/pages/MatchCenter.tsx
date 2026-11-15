@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { MatchRow } from "../components/match";
 import { LeagueTable, PositionChart } from "../components/season";
-import { Club, Empty, Seg, Stat, Tabs } from "../components/ui";
+import { Plate, Stamp } from "../components/travel";
+import { Club, Empty, PageHead, Seg, Stat, Tabs } from "../components/ui";
 import { CLUB, CODES } from "../engine/model";
 import { STAGE_LABEL, type MatchResult, type Season, type Tie } from "../engine/season";
 import { player } from "../engine/squads";
@@ -45,25 +46,38 @@ function Summary({ s, onNew, busy }: { s: Season; onNew: () => void; busy: boole
       .sort((a, b) => b[1][k] - a[1][k])
       .slice(0, 5);
   const f = s.final.match;
+  const { result } = useSim();
   return (
-    <div className="card">
-      <div className="row between">
-        <div>
-          <div className="kicker">This run</div>
-          <h1 style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)", marginTop: 4 }}>
-            <Club code={s.champion} size={34} /> lift the trophy
-          </h1>
+    <div className="stack" style={{ gap: 22 }}>
+      <PageHead
+        title={<>{CLUB[s.champion].name} lift the trophy</>}
+        meta={<>Match Center · one seeded season, seed <span className="mono">{result?.seed}</span>. Every match below is a ticket from this run.</>}
+        actions={<button className="btn" onClick={onNew} disabled={busy}>New run</button>}
+      />
+      <div className="mc-final">
+        <Plate city="madrid" />
+        <div className="guilloche mc-final-card">
+          <span className="field-l">The final · Madrid</span>
+          <div className="row" style={{ gap: 14, flexWrap: "nowrap", marginTop: 8 }}>
+            <Club code={f.home} short size={28} />
+            <strong className="score" style={{ fontSize: "2.4rem" }}>{f.hg}–{f.ag}</strong>
+            <Club code={f.away} short size={28} />
+          </div>
+          <p className="small muted" style={{ marginTop: 8 }}>
+            {f.pens ? `${CLUB[s.champion].short} win ${Math.max(...f.pens)}–${Math.min(...f.pens)} on penalties. ` : f.aet ? "After extra time. " : ""}
+            {f.detail?.goals.map((g) => `${player(g.scorer).name} ${g.min}′`).join(", ") || "No goals."}
+          </p>
+          <div style={{ marginTop: 14 }}><Stamp label="Champions" value={CLUB[s.champion].short} tilt={-3} big /></div>
         </div>
-        <button className="btn" onClick={onNew} disabled={busy}>New run</button>
       </div>
-      <div className="tiles" style={{ marginTop: 16 }}>
+      <div className="tiles">
         <Stat v={goals} l="total goals" />
         <Stat v={(goals / ms.length).toFixed(2)} l="goals per match" />
         <Stat v={et} l="ties to extra time" />
         <Stat v={pens} l="shootouts" />
         <Stat v={hat} l="hat-tricks" />
       </div>
-      <div className="grid g3" style={{ marginTop: 18 }}>
+      <div className="grid g2">
         <div>
           <h3 style={{ marginBottom: 8 }}>Top scorers</h3>
           <ol className="small" style={{ margin: 0, paddingLeft: 18 }}>
@@ -79,18 +93,6 @@ function Summary({ s, onNew, busy }: { s: Season; onNew: () => void; busy: boole
               <li key={pid}>{player(pid).name} <span className="muted">· {t.a}</span></li>
             ))}
           </ol>
-        </div>
-        <div>
-          <h3 style={{ marginBottom: 8 }}>The final</h3>
-          <div className="row" style={{ gap: 10, flexWrap: "nowrap" }}>
-            <Club code={f.home} short />
-            <strong style={{ fontSize: "1.4rem" }}>{f.hg}–{f.ag}</strong>
-            <Club code={f.away} short />
-          </div>
-          <p className="small muted" style={{ marginTop: 6 }}>
-            {f.pens ? `${CLUB[s.champion].short} win ${Math.max(...f.pens)}–${Math.min(...f.pens)} on penalties. ` : f.aet ? "After extra time. " : ""}
-            {f.detail?.goals.map((g) => `${player(g.scorer).name} ${g.min}′`).join(", ") || "No goals."}
-          </p>
         </div>
       </div>
       {s.league.some((m) => m.real) && (
@@ -111,7 +113,7 @@ function LeagueTab({ s }: { s: Season }) {
   return (
     <div className="grid g2" style={{ alignItems: "start" }}>
       <div>
-        <h3 style={{ marginBottom: 8 }}>Final league phase table</h3>
+        <h2 style={{ marginBottom: 12 }}>Final league phase table</h2>
         <LeagueTable rows={s.table} highlight={club || undefined} onPick={(c) => setClub(c)} />
       </div>
       <div className="stack">
@@ -166,21 +168,21 @@ function KnockoutTab({ s }: { s: Season }) {
           { id: "final", label: "Final" },
         ]}
       />
-      <h3 style={{ margin: "16px 0 10px" }}>{STAGE_LABEL[round]}</h3>
+      <h2 style={{ margin: "22px 0 12px" }}>{STAGE_LABEL[round]}</h2>
       {round === "final" ? (
         <MatchRow m={s.final.match} label="Madrid" defaultOpen />
       ) : (
         <div className="stack">
           {ties.map((t) => (
             <div key={t.id} className="card flat" style={{ padding: 14 }}>
-              <div className="row between" style={{ marginBottom: 8 }}>
+              <div className="row between" style={{ marginBottom: 10 }}>
                 <div className="row" style={{ gap: 8 }}>
                   <Club code={t.a} /> <span className="muted">v</span> <Club code={t.b} />
                 </div>
-                <div className="row" style={{ gap: 8 }}>
+                <div className="row" style={{ gap: 12 }}>
                   <strong>Agg {t.aggA}–{t.aggB}</strong>
-                  {t.pens ? <span className="pill warn">pens {t.pens[0]}–{t.pens[1]}</span> : t.aet ? <span className="pill">a.e.t.</span> : null}
-                  <span className="pill gold">{CLUB[t.winner].short} through</span>
+                  {t.pens ? <span className="pill">pens {t.pens[0]}–{t.pens[1]}</span> : t.aet ? <span className="pill">a.e.t.</span> : null}
+                  <Stamp label="Through" value={CLUB[t.winner].code} tilt={-3} />
                 </div>
               </div>
               <MatchRow m={t.legs[0]} label="1st leg" />

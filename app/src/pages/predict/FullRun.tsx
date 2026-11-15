@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Bar, Club, Empty, OddsList, Seg, useCopy } from "../../components/ui";
+import { ArrowLeft, ArrowRight, ChevronDown, ChevronUp, GripVertical } from "lucide-react";
+import { Stamp } from "../../components/travel";
+import { Bar, Club, Empty, OddsList, PageHead, Seg, useCopy } from "../../components/ui";
 import { modelOrder } from "../../engine/aggregate";
 import { BUCKET_LABEL, bucketOf, type Bucket } from "../../engine/bracket";
 import { CLUB, CODES, FIXTURES, fmtPct, formatBig, singleKnockoutOdds, tieOdds } from "../../engine/model";
@@ -76,17 +78,17 @@ export default function FullRun() {
 
   return (
     <div className="stack">
-      <div className="row between">
-        <div>
-          <div className="kicker">The full run</div>
-          <h1 style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)", marginTop: 4 }}>Play the whole season</h1>
-        </div>
-        <div className="steps" aria-label="Progress">
-          {["League phase", "Knockouts", "Report"].map((l, i) => (
-            <span key={l} className={step === i + 1 ? "on" : step > i + 1 ? "done" : ""}>{i + 1} · {l}</span>
-          ))}
-        </div>
-      </div>
+      <PageHead
+        title="Play the whole season"
+        meta="The full run: your league table, every knockout tie, then a graded report."
+        actions={
+          <div className="steps" aria-label="Progress">
+            {["League phase", "Knockouts", "Report"].map((l, i) => (
+              <span key={l} className={step === i + 1 ? "on" : step > i + 1 ? "done" : ""} aria-current={step === i + 1 ? "step" : undefined}>{i + 1} · {l}</span>
+            ))}
+          </div>
+        }
+      />
       <p className="small muted" aria-live="polite">{msg}</p>
       {step === 1 && (
         <LeagueStep
@@ -136,9 +138,9 @@ function LeagueStep({ order, quick, setQuick, setOrder, assign, setAssign, reset
     <div className="card">
       <div className="row between" style={{ marginBottom: 12 }}>
         <div>
-          <h2>Step 1 · League phase</h2>
+          <h2>League phase</h2>
           <p className="small muted">
-            {quick ? "Drop each club into a bucket: 8 to the last 16, 16 to the play-off, 12 out." : "Drag clubs into your predicted 1–36 order, or use ▲/▼. Hover a club to see its 8 drawn opponents."}
+            {quick ? "Drop each club into a bucket: 8 to the last 16, 16 to the play-off, 12 out." : "Drag clubs into your predicted 1–36 order, or use the arrows. Hover or focus a club to see its 8 drawn opponents."}
           </p>
         </div>
         <div className="row">
@@ -148,7 +150,7 @@ function LeagueStep({ order, quick, setQuick, setOrder, assign, setAssign, reset
       </div>
       {quick ? <Buckets order={order} assign={assign} setAssign={setAssign} /> : <OrderList order={order} setOrder={setOrder} />}
       <div className="row" style={{ marginTop: 16, justifyContent: "flex-end" }}>
-        <button className="btn primary" onClick={next} disabled={!ok}>{ok ? "Next: knockouts →" : "Buckets need 8 / 16 / 12"}</button>
+        <button className="btn primary" onClick={next} disabled={!ok}>{ok ? <>Next: knockouts <ArrowRight size={15} aria-hidden="true" /></> : "Buckets need 8 / 16 / 12"}</button>
       </div>
     </div>
   );
@@ -196,12 +198,12 @@ function OrderList({ order, setOrder }: { order: string[]; setOrder: (o: string[
               onMouseLeave={() => setTip(null)}
             >
               <span className="p">{i + 1}</span>
-              <span className="handle" aria-hidden="true">⋮⋮</span>
+              <span className="handle" aria-hidden="true"><GripVertical size={16} /></span>
               <span tabIndex={0} onFocus={() => setTip(c)} onBlur={() => setTip(null)}><Club code={c} /></span>
               <span className="small faint">Pot {CLUB[c].pot}</span>
               <span className="mv">
-                <button aria-label={`Move ${CLUB[c].name} up`} onClick={() => move(i, i - 1)} disabled={i === 0}>▲</button>
-                <button aria-label={`Move ${CLUB[c].name} down`} onClick={() => move(i, i + 1)} disabled={i === order.length - 1}>▼</button>
+                <button aria-label={`Move ${CLUB[c].name} up`} onClick={() => move(i, i - 1)} disabled={i === 0}><ChevronUp size={15} aria-hidden="true" /></button>
+                <button aria-label={`Move ${CLUB[c].name} down`} onClick={() => move(i, i + 1)} disabled={i === order.length - 1}><ChevronDown size={15} aria-hidden="true" /></button>
               </span>
               {tip === c && <Opponents code={c} />}
             </div>
@@ -319,7 +321,7 @@ function KnockoutStep({ order, picks, setPicks, ub, drawSeed, back, next, copy }
     <div className="card">
       <div className="row between" style={{ marginBottom: 12 }}>
         <div>
-          <h2>Step 2 · Knockouts</h2>
+          <h2>Knockouts</h2>
           <p className="small muted">
             Built from your table on UEFA's seeded paths. Where UEFA draws between two slots, the draw is fixed by bracket seed <span className="mono">{drawSeed}</span>. Click the winner of every tie; percentages are the model's odds of advancing.
           </p>
@@ -339,15 +341,20 @@ function KnockoutStep({ order, picks, setPicks, ub, drawSeed, back, next, copy }
           {col("Final", [ub.final])}
           <div className="bcol">
             <h4>Champion</h4>
-            <div className="champ-banner">
-              {ub.final.winner ? <Club code={ub.final.winner} bold /> : <span className="small">Pick a champion</span>}
-            </div>
+            {ub.final.winner ? (
+              <div className="champ-banner">
+                <span className="kicker">Champions</span>
+                <div style={{ display: "flex", justifyContent: "center", marginTop: 6 }}><Club code={ub.final.winner} bold /></div>
+              </div>
+            ) : (
+              <div className="bucket" style={{ minHeight: 0, textAlign: "center" }}><span className="small muted">Pick a champion</span></div>
+            )}
           </div>
         </div>
       </div>
       <div className="row between" style={{ marginTop: 16 }}>
-        <button className="btn" onClick={back}>← Back</button>
-        <button className="btn primary" onClick={next} disabled={!complete}>{complete ? "Run my prediction →" : "Pick every tie to continue"}</button>
+        <button className="btn" onClick={back}><ArrowLeft size={15} aria-hidden="true" /> Back</button>
+        <button className="btn primary" onClick={next} disabled={!complete}>{complete ? <>Run my prediction <ArrowRight size={15} aria-hidden="true" /></> : "Pick every tie to continue"}</button>
       </div>
     </div>
   );
@@ -364,7 +371,7 @@ function ReportStep({ entry, drawSeed, tweak, share }: { entry: Entry; drawSeed:
       <div className="grid g2">
         <div className="card">
           <div className="row" style={{ gap: 20, flexWrap: "nowrap" }}>
-            <div className="grade" aria-label={`Grade ${rep.grade}`}>{rep.grade}</div>
+            <div className="grade" role="img" aria-label={`Grade ${rep.grade}`}>{rep.grade}</div>
             <div>
               <h2>{rep.gradeLabel}</h2>
               <p className="small muted" style={{ marginTop: 4 }}>Graded across {rep.runs.toLocaleString("en-GB")} simulated seasons (seed <span className="mono">{result.seed}</span>).</p>
@@ -378,10 +385,11 @@ function ReportStep({ entry, drawSeed, tweak, share }: { entry: Entry; drawSeed:
           </div>
         </div>
         <div className="card">
-          <div className="kicker">Your champion</div>
+          <h3>Your champion</h3>
           {rep.champion && (
             <div className="row" style={{ marginTop: 10, gap: 12 }}>
               <Club code={rep.champion} size={40} bold />
+              <Stamp label="Model rank" value={`#${rep.champRank}`} tilt={-3} />
             </div>
           )}
           <p style={{ marginTop: 10 }}>
@@ -436,13 +444,13 @@ function ReportStep({ entry, drawSeed, tweak, share }: { entry: Entry; drawSeed:
       <div className="grid g2">
         {rep.safest && (
           <div className="card">
-            <div className="kicker">Safest pick</div>
+            <h3>Safest pick</h3>
             <p style={{ marginTop: 8 }}><Club code={rep.safest.code} bold /> to reach {stage(rep.safest.stage)}: <strong>{fmtPct(rep.safest.p)}</strong>.</p>
           </div>
         )}
         {rep.gamble && (
           <div className="card">
-            <div className="kicker">Biggest gamble</div>
+            <h3>Biggest gamble</h3>
             <p style={{ marginTop: 8 }}><Club code={rep.gamble.code} bold /> to reach {stage(rep.gamble.stage)}: <strong>{fmtPct(rep.gamble.p)}</strong>.</p>
           </div>
         )}

@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import { CLUB } from "../engine/model";
 import type { Season, TableRow, Tie } from "../engine/season";
-import { Club } from "./ui";
+import { Plate } from "./travel";
+import { Badge, Club } from "./ui";
 
 const zone = (pos: number) => (pos <= 8 ? "zone-top8" : pos <= 24 ? "zone-po" : "zone-out");
 
@@ -27,7 +28,7 @@ export function LeagueTable({ rows, highlight, onPick }: { rows: TableRow[]; hig
         <tbody>
           {rows.map((r) => (
             <tr key={r.code} className={`${zone(r.pos)}${highlight === r.code ? " hl" : ""}`}>
-              <td className="num">{r.pos}</td>
+              <td className="num"><span className="pos">{r.pos}</span></td>
               <td>
                 {onPick ? (
                   <button className="btn ghost small" style={{ padding: 0 }} onClick={() => onPick(r.code)}>
@@ -50,7 +51,7 @@ export function LeagueTable({ rows, highlight, onPick }: { rows: TableRow[]; hig
         </tbody>
       </table>
       <p className="small muted" style={{ marginTop: 8 }}>
-        <span className="pill real">1–8</span> Round of 16 · <span className="pill warn">9–24</span> knockout play-off · <span className="pill">25–36</span> eliminated. Tie-breakers: points, goal difference, goals scored, away goals scored, wins, away wins, opponents' points, opponents' goal difference, opponents' goals scored, then coefficient.
+        <span className="pill real">1–8</span> Round of 16 · <span className="pill gold">9–24</span> knockout play-off · <span className="pill">25–36</span> eliminated. Tie-breakers: points, goal difference, goals scored, away goals scored, wins, away wins, opponents' points, opponents' goal difference, opponents' goals scored, then coefficient.
       </p>
     </div>
   );
@@ -60,11 +61,10 @@ export function PositionChart({ series, code }: { series: number[]; code: string
   const W = 560, H = 240, L = 34, R = 12, T = 12, B = 28;
   const x = (i: number) => L + (i / Math.max(1, series.length - 1)) * (W - L - R);
   const y = (p: number) => T + ((p - 1) / 35) * (H - T - B);
-  const color = CLUB[code].colors[0];
   return (
     <svg className="chart" viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={`${CLUB[code].name} league position after each matchday`}>
       <rect x={L} y={y(1) - 4} width={W - L - R} height={y(8.5) - y(1) + 4} fill="var(--good-soft)" />
-      <rect x={L} y={y(8.5)} width={W - L - R} height={y(24.5) - y(8.5)} fill="var(--warn-soft)" opacity="0.6" />
+      <rect x={L} y={y(8.5)} width={W - L - R} height={y(24.5) - y(8.5)} fill="var(--warn-soft)" />
       <g className="grid">
         {[1, 8, 16, 24, 36].map((p) => (
           <g key={p}>
@@ -76,10 +76,10 @@ export function PositionChart({ series, code }: { series: number[]; code: string
       {series.map((_, i) => (
         <text key={i} x={x(i)} y={H - 8} textAnchor="middle">MD{i + 1}</text>
       ))}
-      <polyline fill="none" stroke="var(--accent)" strokeWidth="2.5" points={series.map((p, i) => `${x(i)},${y(p)}`).join(" ")} />
+      <polyline fill="none" stroke="var(--route)" strokeWidth="2.5" points={series.map((p, i) => `${x(i)},${y(p)}`).join(" ")} />
       {series.map((p, i) => (
         <g key={i}>
-          <circle cx={x(i)} cy={y(p)} r="5" fill={color} stroke="var(--panel)" strokeWidth="2" />
+          <circle cx={x(i)} cy={y(p)} r="5" fill="var(--route)" stroke="var(--panel)" strokeWidth="2" />
           <text x={x(i)} y={y(p) - 9} textAnchor="middle" style={{ fontWeight: 700, fill: "var(--text)" }}>{p}</text>
         </g>
       ))}
@@ -117,7 +117,7 @@ export function CalibrationChart({ model, elo }: { model: { p: number; o: number
 function TieBox({ t, hidden, pos }: { t: Tie; hidden?: boolean; pos: Record<string, number> }) {
   const line = (code: string, agg: number) => (
     <div className={`bt ${t.winner === code ? "win" : "lose"}`}>
-      <span className="club"><span className="mono faint" style={{ fontSize: "0.68rem", width: 18 }}>{pos[code]}</span><Club code={code} short /></span>
+      <span className="club" title={CLUB[code].name}><span className="faint" style={{ fontSize: "0.68rem", width: 18 }}>{pos[code]}</span><Badge code={code} size={18} /><span className="tcode">{code}</span><span className="vh">{CLUB[code].name}</span></span>
       <span className="agg">{agg}</span>
     </div>
   );
@@ -155,6 +155,7 @@ export function BracketView({ s, revealed = 6, extra }: { s: Season; revealed?: 
         {col("Semi-final", left.sf, 4)}
         <div className="bcol final-col">
           <h4>Final · Madrid</h4>
+          <Plate city="madrid" className="bracket-plate" />
           <div className={`btie${revealed < 5 ? " hidden" : ""}`}>
             {[f.match.home, f.match.away].map((c, i) => (
               <div key={c} className={`bt ${f.winner === c ? "win" : "lose"}`}>
@@ -165,7 +166,7 @@ export function BracketView({ s, revealed = 6, extra }: { s: Season; revealed?: 
             <div className="legs">{f.match.pens ? `pens ${f.match.pens[0]}–${f.match.pens[1]}` : f.match.aet ? "a.e.t." : "Metropolitano"}</div>
           </div>
           <div className={`champ-banner${revealed < 6 ? " hidden" : ""}`} style={{ opacity: revealed < 6 ? 0 : 1, transition: "opacity .5s" }}>
-            <div className="kicker" style={{ color: "inherit" }}>Champion</div>
+            <div className="kicker">Champions</div>
             <div style={{ display: "flex", justifyContent: "center", marginTop: 6 }}><Club code={s.champion} bold /></div>
           </div>
           {extra}

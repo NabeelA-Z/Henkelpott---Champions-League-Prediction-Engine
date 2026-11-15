@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
+import { ArrowLeftRight, Minus, Plane, Plus } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { MatchRow, ScoreHeat } from "../../components/match";
-import { Bar, Club, Seg } from "../../components/ui";
+import { CLUB_CITY, cityOf, Plate, venueOf } from "../../components/travel";
+import { Bar, Club, PageHead, Seg } from "../../components/ui";
 import { CLUB, CODES, fmtPct, markets, matchOdds, oneIn, singleKnockoutOdds, tieOdds, type Venue } from "../../engine/model";
 import { makeRng, randomSeed } from "../../engine/rng";
 import { playOne, playSingle, playTie, type MatchResult, type Tie } from "../../engine/season";
@@ -11,9 +14,9 @@ const SORTED = [...CODES].sort((a, b) => CLUB[a].name.localeCompare(CLUB[b].name
 function Stepper({ value, set, label }: { value: number; set: (n: number) => void; label: string }) {
   return (
     <div className="stepper" role="group" aria-label={label}>
-      <button aria-label={`${label} minus one`} onClick={() => set(Math.max(0, value - 1))}>−</button>
+      <button aria-label={`${label} minus one`} onClick={() => set(Math.max(0, value - 1))}><Minus size={16} aria-hidden="true" /></button>
       <output aria-live="polite">{value}</output>
-      <button aria-label={`${label} plus one`} onClick={() => set(Math.min(9, value + 1))}>+</button>
+      <button aria-label={`${label} plus one`} onClick={() => set(Math.min(9, value + 1))}><Plus size={16} aria-hidden="true" /></button>
     </div>
   );
 }
@@ -30,8 +33,11 @@ function ClubPick({ value, onChange, id, label }: { value: string; onChange: (c:
 }
 
 export default function OneMatch() {
-  const [a, setA] = useState("RMA");
-  const [b, setB] = useState("BAY");
+  const [params] = useSearchParams();
+  const pa = params.get("a"), pb = params.get("b");
+  const fromLink = !!(pa && pb && CLUB[pa] && CLUB[pb] && pa !== pb);
+  const [a, setA] = useState(fromLink ? pa! : "RMA");
+  const [b, setB] = useState(fromLink ? pb! : "BAY");
   const [venue, setVenue] = useState<"a" | "b" | "n">("a");
   const [twoLeg, setTwoLeg] = useState(false);
   const [call, setCall] = useState<[number, number]>([1, 1]); // home-away of the (first) match
@@ -71,9 +77,11 @@ export default function OneMatch() {
 
   return (
     <div className="stack">
-      <div className="card">
-        <div className="kicker">One match</div>
-        <h1 style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)", margin: "4px 0 12px" }}>Club vs club</h1>
+      <PageHead
+        title={<>{CLUB[home].short} v {CLUB[away].short}</>}
+        meta={<>One match · {twoLeg ? `two legs, ${cityOf(a)} then ${cityOf(b)}` : v === "neutral" ? "neutral venue, as a final" : `at ${venueOf(home)}`}</>}
+      />
+      <div className="card guilloche">
         <div className="row" style={{ marginBottom: 14 }}>
           <span className="small muted">Marquee ties:</span>
           {MARQUEE.map(([x, y]) => (
@@ -84,7 +92,7 @@ export default function OneMatch() {
         </div>
         <div className="row" style={{ alignItems: "end", gap: 16 }}>
           <ClubPick id="clubA" label={twoLeg ? "Club A (hosts leg 1)" : "Club A"} value={a} onChange={(c) => { if (c !== b) setA(c); else swap(); setPlayed(null); }} />
-          <button className="btn icon" onClick={swap} aria-label="Swap clubs" title="Swap">⇄</button>
+          <button className="btn icon" onClick={swap} aria-label="Swap clubs" title="Swap"><ArrowLeftRight size={17} aria-hidden="true" /></button>
           <ClubPick id="clubB" label={twoLeg ? "Club B (hosts leg 2)" : "Club B"} value={b} onChange={(c) => { if (c !== a) setB(c); else swap(); setPlayed(null); }} />
           {!twoLeg && (
             <div className="stack" style={{ gap: 6 }}>
@@ -100,11 +108,25 @@ export default function OneMatch() {
         </div>
       </div>
 
-      <div className="grid g2">
-        <div className="card">
+      <article className="boarding">
+        <div className="bp-head">
+          <Plate city={v === "neutral" ? "madrid" : CLUB_CITY[home]} className="bp-plate" />
+          <div className="bp-route">
+            <div><span className="field-l">From</span><span className="iata">{away}</span><span className="small">{cityOf(away)}</span></div>
+            <span className="flight" aria-hidden="true"><Plane size={16} strokeWidth={2} /></span>
+            <div style={{ textAlign: "right" }}><span className="field-l">To</span><span className="iata">{v === "neutral" ? "MAD" : home}</span><span className="small">{v === "neutral" ? "Madrid, neutral" : venueOf(home)}</span></div>
+            <div className="bp-fields">
+              <div><span className="field-l">Fixture</span><span className="field-v">{CLUB[home].short} v {CLUB[away].short}</span></div>
+              <div><span className="field-l">Format</span><span className="field-v">{twoLeg ? "Two legs" : v === "neutral" ? "Final, one match" : "One match"}</span></div>
+              <div><span className="field-l">Expected goals</span><span className="field-v">{odds.lh.toFixed(2)} – {odds.la.toFixed(2)}</span></div>
+            </div>
+          </div>
+        </div>
+      <div className="bp-row">
+        <div className="bp-cell">
           <h3>{twoLeg ? "Call both legs" : "Call the score"}</h3>
           <div className="stack" style={{ marginTop: 12 }}>
-            <div className="row" style={{ justifyContent: "center", gap: 12, flexWrap: "nowrap" }}>
+            <div className="row call-row" style={{ justifyContent: "center", gap: 12, flexWrap: "nowrap" }}>
               <Club code={home} short />
               <Stepper label={`${CLUB[home].short} goals`} value={call[0]} set={(n) => setCall([n, call[1]])} />
               <span className="muted">–</span>
@@ -112,7 +134,7 @@ export default function OneMatch() {
               <Club code={away} short />
             </div>
             {twoLeg && (
-              <div className="row" style={{ justifyContent: "center", gap: 12, flexWrap: "nowrap" }}>
+              <div className="row call-row" style={{ justifyContent: "center", gap: 12, flexWrap: "nowrap" }}>
                 <Club code={b} short />
                 <Stepper label={`Leg 2 ${CLUB[b].short} goals`} value={call2[0]} set={(n) => setCall2([n, call2[1]])} />
                 <span className="muted">–</span>
@@ -121,8 +143,8 @@ export default function OneMatch() {
               </div>
             )}
           </div>
-          <div className="card flat" style={{ marginTop: 16, background: "var(--panel-2)" }}>
-            <div className="kicker">Your call</div>
+          <div className="bp-call">
+            <h3>Your call</h3>
             {twoLeg ? (
               <>
                 <p style={{ margin: "6px 0" }}>
@@ -136,7 +158,7 @@ export default function OneMatch() {
             ) : (
               <>
                 <p style={{ margin: "6px 0" }}>
-                  <strong style={{ fontSize: "1.6rem" }}>{fmtPct(pCall)}</strong> · about 1 in {oneIn(pCall)} · decimal odds {(1 / Math.max(pCall, 1e-9)).toFixed(2)}
+                  <strong style={{ fontSize: "1.6rem" }}>{fmtPct(pCall)}</strong> · about 1 in {oneIn(pCall)}
                 </p>
                 <p className="small muted">
                   #{rank} of {allCells.length} scorelines. {backs ? `Backs ${CLUB[backs].name}` : "Backs a draw"}
@@ -147,7 +169,7 @@ export default function OneMatch() {
           </div>
         </div>
 
-        <div className="card">
+        <div className="bp-cell">
           {twoLeg ? (
             <>
               <h3>Who progresses?</h3>
@@ -190,8 +212,9 @@ export default function OneMatch() {
         </div>
       </div>
 
-      <div className="grid g2">
-        <div className="card">
+      <div className="bp-perf" aria-hidden="true" />
+      <div className="bp-row">
+        <div className="bp-cell">
           <h3>Scoreline map{twoLeg ? " · leg 1" : ""}</h3>
           <p className="small muted">Chance of each exact score (%), 0–5 goals. Your call is ringed; dashed is the most likely.</p>
           <div style={{ maxWidth: 420, marginTop: 10 }}><ScoreHeat odds={odds} ring={call} /></div>
@@ -202,8 +225,8 @@ export default function OneMatch() {
             </>
           )}
         </div>
-        <div className="card">
-          <h3>Markets{twoLeg ? " · leg 1" : ""}</h3>
+        <div className="bp-cell">
+          <h3>Goals and clean sheets{twoLeg ? " · leg 1" : ""}</h3>
           <table style={{ marginTop: 8 }}>
             <tbody>
               {[
@@ -214,7 +237,6 @@ export default function OneMatch() {
                   <td>{k}</td>
                   <td style={{ width: "45%" }}><Bar value={p as number} /></td>
                   <td className="num"><strong>{fmtPct(p as number)}</strong></td>
-                  <td className="num muted">{(1 / (p as number)).toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
@@ -226,6 +248,7 @@ export default function OneMatch() {
           </div>
         </div>
       </div>
+      </article>
 
       {played && (
         <div className="card" aria-live="polite">

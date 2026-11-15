@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Bar, Club, Empty, Seg, Tabs } from "../components/ui";
+import { Stamp } from "../components/travel";
+import { Badge, Bar, Club, Empty, PageHead, Seg, Tabs } from "../components/ui";
+import { CLUB } from "../engine/model";
 import { fmtPct } from "../engine/model";
 import { player, usingPlaceholders } from "../engine/squads";
 import { useSim } from "../state/sim";
@@ -31,12 +33,10 @@ export default function Stats() {
 
   return (
     <div className="stack">
-      <div>
-        <div className="kicker">Tournament stats · seed <span className="mono">{result.seed}</span></div>
-        <h1 style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)", marginTop: 4 }}>
-          <Club code={s.champion} size={34} /> lift the trophy
-        </h1>
-      </div>
+      <PageHead
+        title="Golden Boot and the rest"
+        meta={<>Tournament stats · seed <span className="mono">{result.seed}</span> · {CLUB[s.champion].name} lift the trophy in this run.</>}
+      />
       <div className="card">
         <Tabs label="Statistic" value={kind} onChange={setKind} items={(["g", "a", "cs"] as Kind[]).map((k) => ({ id: k, label: LABEL[k] }))} />
         <div className="row between" style={{ marginBottom: 16 }}>
@@ -49,19 +49,19 @@ export default function Stats() {
         {view === "run" ? (
           rows.length ? (
             <>
-              <div className="podium" style={{ marginBottom: 18 }}>
-                {[1, 0, 2].map((i) =>
+              <div className={`boot-stamps pressing`} key={`${kind}-${phase}-${result.seed}`}>
+                {[0, 1, 2].map((i) =>
                   rows[i] ? (
-                    <div key={i} className={`step${i === 0 ? " first" : ""}`}>
-                      <div className="place">{i + 1}</div>
-                      <div style={{ fontWeight: 800, marginTop: 4 }}>{player(rows[i].pid).name}</div>
-                      <div style={{ display: "flex", justifyContent: "center", margin: "6px 0" }}><Club code={player(rows[i].pid).club} short /></div>
-                      <div className="count">{rows[i].n}</div>
-                      <div className="small muted">{UNIT[kind]}</div>
-                    </div>
-                  ) : (
-                    <div key={i} />
-                  ),
+                    <Stamp
+                      key={rows[i].pid}
+                      i={i}
+                      tilt={[-3, 2, -1.5][i]}
+                      big={i === 0}
+                      tone="ink"
+                      label={<>{["1st", "2nd", "3rd"][i]} · {player(rows[i].pid).name}<span className="who"><Badge code={player(rows[i].pid).club} size={16} /> {CLUB[player(rows[i].pid).club].short}</span></>}
+                      value={`${rows[i].n} ${UNIT[kind]}`}
+                    />
+                  ) : null,
                 )}
               </div>
               <table>

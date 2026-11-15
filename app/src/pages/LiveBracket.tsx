@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { BracketView } from "../components/season";
-import { Club, Empty, useCopy } from "../components/ui";
+import { Club, Empty, PageHead, useCopy } from "../components/ui";
 import { CLUB } from "../engine/model";
 import type { Season } from "../engine/season";
 import { useSim } from "../state/sim";
@@ -37,23 +37,23 @@ export default function LiveBracket() {
 
   return (
     <div className="stack">
-      <div className="row between">
-        <div>
-          <div className="kicker">Live bracket · seed <span className="mono">{result.seed}</span></div>
-          <h1 style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)", marginTop: 4 }}>From the play-off to Madrid</h1>
-        </div>
-        <div className="row">
-          <label className="row small" style={{ gap: 6 }}>
-            <input type="checkbox" checked={lead} onChange={(e) => setLead(e.target.checked)} /> League-phase lead-in
-          </label>
-          <button className="btn" onClick={async () => setMsg((await copy(window.location.href)) ? "Link copied" : "Copy failed")}>Copy link</button>
-          <button className="btn" onClick={() => poster(s, result.seed)}>Share poster</button>
-          <button className="btn" onClick={() => play(lead)}>Replay</button>
-          <button className="btn primary" onClick={() => run({ fresh: true })} disabled={status === "running"}>New run</button>
-        </div>
-      </div>
+      <PageHead
+        title="From the play-off to Madrid"
+        meta={<>Live bracket · seed <span className="mono">{result.seed}</span> · one seeded season, revealed round by round.</>}
+        actions={
+          <>
+            <label className="row small" style={{ gap: 6 }}>
+              <input type="checkbox" checked={lead} onChange={(e) => setLead(e.target.checked)} /> League-phase lead-in
+            </label>
+            <button className="btn" onClick={async () => setMsg((await copy(window.location.href)) ? "Link copied" : "Copy failed")}>Copy link</button>
+            <button className="btn" onClick={() => poster(s, result.seed)}>Share poster</button>
+            <button className="btn" onClick={() => play(lead)}>Replay</button>
+            <button className="btn primary" onClick={() => run({ fresh: true })} disabled={status === "running"}>New run</button>
+          </>
+        }
+      />
       <p className="small muted" aria-live="polite">{msg || "No third-place match in this competition. Ties show both legs (first leg at the lower seed) and the aggregate."}</p>
-      {phase === "table" ? <TableLeadIn s={s} /> : <div className="card"><BracketView s={s} revealed={revealed} /></div>}
+      {phase === "table" ? <TableLeadIn s={s} /> : <div className="card bracket-wide"><BracketView s={s} revealed={revealed} /></div>}
     </div>
   );
 }
@@ -73,13 +73,13 @@ function TableLeadIn({ s }: { s: Season }) {
         {s.order.map((c, finalIdx) => {
           const startIdx = seedOrder.indexOf(c);
           const i = settled ? finalIdx : startIdx;
-          const zone = finalIdx < 8 ? "var(--good)" : finalIdx < 24 ? "var(--warn)" : "var(--out)";
+          const zone = finalIdx < 8 ? "var(--stamp)" : finalIdx < 24 ? "var(--rule-2)" : "transparent";
           return (
             <div
               key={c}
               style={{
                 position: "absolute", left: 0, right: 0, top: i * rowH, height: rowH - 4, display: "flex", alignItems: "center", gap: 10,
-                padding: "0 10px", borderRadius: 8, background: "var(--panel-2)", boxShadow: settled ? `inset 3px 0 0 ${zone}` : "none",
+                padding: "0 10px", borderRadius: 3, background: "var(--sheet)", boxShadow: settled ? `0 0 0 1px var(--rule), inset 0 -2px 0 ${zone}` : "0 0 0 1px var(--rule)",
                 transition: `top 1.8s cubic-bezier(.2,.8,.2,1) ${(finalIdx % 9) * 30}ms, box-shadow .6s 1.6s`,
               }}
             >
@@ -101,13 +101,13 @@ function poster(s: Season, seed: string) {
   cv.width = W;
   cv.height = H;
   const g = cv.getContext("2d")!;
-  g.fillStyle = "#070d22";
+  g.fillStyle = "#0c1a45";
   g.fillRect(0, 0, W, H);
-  g.fillStyle = "#e8ecf5";
-  g.font = "800 44px system-ui, sans-serif";
+  g.fillStyle = "#f3f5f9";
+  g.font = "800 44px 'Archivo Variable', system-ui, sans-serif";
   g.fillText("HENKELPOTT · 2026/27", 48, 76);
-  g.font = "500 20px system-ui, sans-serif";
-  g.fillStyle = "#a3adc4";
+  g.font = "500 20px 'Archivo Variable', system-ui, sans-serif";
+  g.fillStyle = "#9aa7c2";
   g.fillText(`Simulated bracket · seed ${seed} · not affiliated with UEFA`, 48, 108);
 
   const cols = [
@@ -122,19 +122,19 @@ function poster(s: Season, seed: string) {
   ];
   const top = 160, span = H - top - 60;
   const box = (x: number, y: number, a: string, b: string, sa: number, sb: number, win: string) => {
-    g.fillStyle = "#0f1a3a";
-    g.strokeStyle = "#2d3d70";
+    g.fillStyle = "#13245a";
+    g.strokeStyle = "#2a3d7d";
     g.lineWidth = 2;
     g.beginPath();
-    g.roundRect(x, y, 170, 64, 10);
+    g.roundRect(x, y, 170, 64, 4);
     g.fill();
     g.stroke();
     [[a, sa], [b, sb]].forEach(([c, sc], i) => {
       const code = c as string;
       g.fillStyle = CLUB[code].colors[0];
       g.fillRect(x + 10, y + 10 + i * 26, 12, 18);
-      g.font = `${win === code ? 800 : 500} 18px system-ui, sans-serif`;
-      g.fillStyle = win === code ? "#e8ecf5" : "#8892ad";
+      g.font = `${win === code ? 800 : 500} 18px 'Archivo Variable', system-ui, sans-serif`;
+      g.fillStyle = win === code ? "#f3f5f9" : "#9aa7c2";
       g.fillText(CLUB[code].short, x + 30, y + 26 + i * 26);
       g.fillText(String(sc), x + 148, y + 26 + i * 26);
     });
@@ -145,15 +145,16 @@ function poster(s: Season, seed: string) {
       box(c.x, y, t.a, t.b, t.aggA, t.aggB, t.winner);
     });
   const f = s.final;
-  g.fillStyle = "#f0c75e";
-  g.font = "800 22px system-ui, sans-serif";
+  g.fillStyle = "#d3d9e3";
+  g.font = "800 22px 'Archivo Variable', system-ui, sans-serif";
   g.textAlign = "center";
   g.fillText("FINAL · MADRID", W / 2 + 15, top + span / 2 - 90);
   box(W / 2 - 70, top + span / 2 - 70, f.match.home, f.match.away, f.match.hg, f.match.ag, f.winner);
-  g.fillStyle = "#f0c75e";
-  g.font = "900 40px system-ui, sans-serif";
+  g.fillStyle = "#f3f5f9";
+  g.font = "900 40px 'Archivo Variable', system-ui, sans-serif";
   g.fillText(CLUB[s.champion].name.toUpperCase(), W / 2 + 15, top + span / 2 + 60);
-  g.font = "600 18px system-ui, sans-serif";
+  g.fillStyle = "#d3d9e3";
+  g.font = "600 18px 'Archivo Variable', system-ui, sans-serif";
   g.fillText("CHAMPIONS", W / 2 + 15, top + span / 2 + 88);
   cv.toBlob((blob) => {
     if (!blob) return;

@@ -22,7 +22,7 @@ export function Badge({ code, size = 22 }: { code: string; size?: number }) {
         <path d={stripe(code)} fill={s} opacity="0.9" />
       </g>
       <path d="M20 1 L38 6 V22 C38 34 30 41 20 45 C10 41 2 34 2 22 V6 Z" fill="none" stroke="rgba(0,0,0,.25)" strokeWidth="1.5" />
-      <text x="20" y="27" textAnchor="middle" fontSize="11.5" fontWeight="800" fontFamily="system-ui, sans-serif"
+      <text x="20" y="27" textAnchor="middle" fontSize="11.5" fontWeight="800" fontFamily="'Archivo Variable', system-ui, sans-serif"
         fill={light ? "#111" : "#fff"} stroke={light ? "rgba(255,255,255,.6)" : "rgba(0,0,0,.35)"} strokeWidth="0.6" paintOrder="stroke">
         {code}
       </text>
@@ -95,7 +95,7 @@ export function Trophy({ className }: { className?: string }) {
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   const { run, status } = useSim();
   return (
-    <div className="card empty">
+    <div className="card empty guilloche">
       <Trophy className="empty-ico" />
       <h2>{title}</h2>
       {children && <p>{children}</p>}
@@ -130,13 +130,27 @@ export function Seg<T extends string | number>({ value, onChange, items, label }
   );
 }
 
-/** Link that keeps ?seed / runs / asof. */
+/** Link that keeps ?seed / runs / asof (merged into any query the target already has). */
 export function SimLink({ to, children, className }: { to: string; children: ReactNode; className?: string }) {
   const { qs } = useSim();
+  const href = qs && to.includes("?") ? `${to}&${qs.slice(1)}` : `${to}${qs}`;
   return (
-    <Link to={`${to}${qs}`} className={className}>
+    <Link to={href} className={className}>
       {children}
     </Link>
+  );
+}
+
+/** Page title block: the heading speaks first, run metadata sits beneath it. */
+export function PageHead({ title, meta, actions }: { title: ReactNode; meta?: ReactNode; actions?: ReactNode }) {
+  return (
+    <div className="page-head">
+      <div style={{ minWidth: 0 }}>
+        <h1>{title}</h1>
+        {meta && <p className="meta">{meta}</p>}
+      </div>
+      {actions && <div className="row">{actions}</div>}
+    </div>
   );
 }
 

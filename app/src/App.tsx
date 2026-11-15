@@ -1,5 +1,6 @@
 import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import { NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { Moon, RefreshCw, Sun } from "lucide-react";
 import { Seg, SimLink, Trophy } from "./components/ui";
 import { RUN_OPTIONS, useSim } from "./state/sim";
 import Dashboard from "./pages/Dashboard";
@@ -35,7 +36,7 @@ function ThemeToggle() {
   };
   return (
     <button className="btn icon ghost" onClick={toggle} aria-label={`Switch to ${dark ? "light" : "dark"} mode`} title="Toggle light / dark">
-      {dark ? "☀" : "☾"}
+      {dark ? <Sun size={18} strokeWidth={1.75} /> : <Moon size={18} strokeWidth={1.75} />}
     </button>
   );
 }
@@ -48,7 +49,7 @@ function Header() {
         <SimLink to="/" className="brand">
           <Trophy className="brand-ico" />
           <span>
-            Henkelpott
+            <b>HENKELPOTT</b>
             <small>UCL 2026/27 engine</small>
           </span>
         </SimLink>
@@ -59,7 +60,7 @@ function Header() {
             </NavLink>
           ))}
         </nav>
-        <div className="controls">
+        <div className="settings">
           <label className="vh" htmlFor="runs">Simulation runs</label>
           <select id="runs" value={runs} onChange={(e) => setRuns(Number(e.target.value))} title="Seasons simulated per run">
             {RUN_OPTIONS.map((n) => (
@@ -75,15 +76,17 @@ function Header() {
               { id: "pre", label: "Pre-season" },
             ]}
           />
+        </div>
+        <div className="controls">
           <button className="btn primary small" onClick={() => run({ fresh: true })} disabled={status === "running"}>
             {status === "running" ? (
               <>
                 <span className="spinner" /> {Math.round(progress * 100)}%
               </>
-            ) : result ? (
-              "Run it again"
             ) : (
-              "Run a fresh simulation"
+              <>
+                <RefreshCw size={15} strokeWidth={2.25} aria-hidden="true" /> {result ? "Run it again" : "Run simulation"}
+              </>
             )}
           </button>
           <ThemeToggle />
@@ -98,10 +101,12 @@ function Footer() {
   return (
     <footer>
       <div className="wrap cols">
-        <div style={{ maxWidth: 520 }}>
-          <strong style={{ color: "var(--text)" }}>Henkelpott</strong> · a seeded Monte Carlo engine for the 2026/27 Champions League.
-          <br />
-          Not affiliated with or endorsed by UEFA or any club. Club names are used descriptively; badges are generated, not official crests.
+        <div style={{ maxWidth: 560 }}>
+          <strong>HENKELPOTT</strong>
+          <p style={{ marginTop: 10 }}>
+            A seeded Monte Carlo engine for the 2026/27 Champions League. Not affiliated with or endorsed by UEFA or any club. Club names are used descriptively;
+            badges are generated, not official crests. Landmark photographs from Wikimedia Commons, credited on the <SimLink to="/about">About</SimLink> page.
+          </p>
         </div>
         <nav aria-label="Footer">
           {NAV.slice(1).map((n) => (
@@ -126,7 +131,7 @@ class Boundary extends Component<{ children: ReactNode; resetKey: string }, { er
   render() {
     if (this.state.error)
       return (
-        <div className="card empty">
+        <div className="card empty guilloche">
           <h2>Something went wrong on this page</h2>
           <p className="mono small">{this.state.error.message}</p>
           <SimLink to="/" className="btn">Back to the dashboard</SimLink>

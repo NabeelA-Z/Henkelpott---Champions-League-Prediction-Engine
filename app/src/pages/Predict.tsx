@@ -1,5 +1,6 @@
+import { ArrowLeft, ArrowRight, Plane } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
-import { SimLink } from "../components/ui";
+import { PageHead, SimLink } from "../components/ui";
 import FullRun from "./predict/FullRun";
 import OneMatch from "./predict/OneMatch";
 
@@ -14,6 +15,7 @@ export default function Predict() {
         n.delete("mode");
         n.delete("b");
         n.delete("step");
+        n.delete("a");
       }
       return n;
     });
@@ -22,31 +24,47 @@ export default function Predict() {
     return (
       <div className="stack">
         <div>
-          <button className="btn ghost small" onClick={() => set(null)}>← Both modes</button>
+          <button className="btn ghost small" onClick={() => set(null)}><ArrowLeft size={15} aria-hidden="true" /> Both modes</button>
         </div>
         {mode === "full" ? <FullRun /> : <OneMatch />}
       </div>
     );
 
   return (
-    <div className="stack">
-      <div>
-        <div className="kicker">Predict</div>
-        <h1 style={{ fontSize: "clamp(1.8rem, 4.5vw, 2.8rem)", marginTop: 4 }}>Your call against the model</h1>
-        <p className="muted" style={{ maxWidth: "60ch", marginTop: 8 }}>Build a full-season bracket and get graded across thousands of simulated seasons, or zoom in on a single tie.</p>
-      </div>
-      <div className="grid g2">
-        <button className="card" style={{ textAlign: "left", cursor: "pointer" }} onClick={() => set("full")}>
-          <div className="kicker">The full run</div>
-          <h2 style={{ margin: "6px 0 8px" }}>Play the whole season</h2>
-          <p className="muted small">Order the 36-club league phase table, pick every play-off and knockout tie, crown a champion, and get a graded report: expected points, perfect-bracket odds and how often you beat the favourites.</p>
-          <span className="btn primary small" style={{ marginTop: 6 }}>Build my bracket →</span>
+    <div className="stack" style={{ gap: 28 }}>
+      <PageHead
+        title="Your call against the model"
+        meta="Build a full-season bracket and get graded across thousands of simulated seasons, or zoom in on a single tie."
+      />
+      <div className="passes">
+        <button className="pass" onClick={() => set("full")}>
+          <span className="pass-main">
+            <span className="pass-route"><span className="iata">36</span><Plane size={16} aria-hidden="true" /><span className="iata">MAD</span></span>
+            <span className="pass-title">Play the whole season</span>
+            <span className="pass-text">
+              Order the 36-club league phase table, pick every play-off and knockout tie, crown a champion, and get a graded report: expected points,
+              perfect-bracket odds and how often you beat the favourites.
+            </span>
+          </span>
+          <span className="pass-stub">
+            <span className="field-l">Class</span>
+            <span className="field-v">Full run</span>
+            <span className="btn primary small">Build my bracket <ArrowRight size={14} aria-hidden="true" /></span>
+          </span>
         </button>
-        <button className="card" style={{ textAlign: "left", cursor: "pointer" }} onClick={() => set("match")}>
-          <div className="kicker">One match</div>
-          <h2 style={{ margin: "6px 0 8px" }}>Club vs club</h2>
-          <p className="muted small">Call an exact scoreline, see the model's odds and scoreline map, try a two-legged tie with extra time and penalties, then settle it by playing the match out.</p>
-          <span className="btn small" style={{ marginTop: 6 }}>Pick a match →</span>
+        <button className="pass" onClick={() => set("match")}>
+          <span className="pass-main">
+            <span className="pass-route"><span className="iata">1</span><Plane size={16} aria-hidden="true" /><span className="iata">1</span></span>
+            <span className="pass-title">Club vs club</span>
+            <span className="pass-text">
+              Call an exact scoreline, see the model's odds and scoreline map, try a two-legged tie with extra time and penalties, then settle it by playing the match out.
+            </span>
+          </span>
+          <span className="pass-stub">
+            <span className="field-l">Class</span>
+            <span className="field-v">One match</span>
+            <span className="btn small">Pick a match <ArrowRight size={14} aria-hidden="true" /></span>
+          </span>
         </button>
       </div>
       <p className="small muted">Grades use the current simulation (<SimLink to="/">dashboard</SimLink> settings: runs and "as of").</p>

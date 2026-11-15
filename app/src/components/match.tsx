@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ArrowDown, ArrowLeftRight, ArrowRight, ChevronDown, Plane, Star } from "lucide-react";
+import { CLUB_CITY, Plate, venueOf } from "./travel";
 import { CLUB, fmtPct, matchOdds, type MatchOdds } from "../engine/model";
 import type { LineupEntry, MatchDetail, MatchResult } from "../engine/season";
 import { FORMATION, player } from "../engine/squads";
@@ -21,8 +23,8 @@ export function ScoreHeat({ odds, ring, size = 6, showMostLikely = true }: { odd
         ))}
       </div>
       <div className="row between small muted" style={{ marginTop: 6 }}>
-        <span>↓ {CLUB[odds.home].short} goals</span>
-        <span>{CLUB[odds.away].short} goals →</span>
+        <span className="row" style={{ gap: 4 }}><ArrowDown size={13} aria-hidden="true" /> {CLUB[odds.home].short} goals</span>
+        <span className="row" style={{ gap: 4 }}>{CLUB[odds.away].short} goals <ArrowRight size={13} aria-hidden="true" /></span>
       </div>
     </div>
   );
@@ -71,11 +73,11 @@ function Pitch({ lineup, code, potm }: { lineup: LineupEntry[]; code: string; po
             <span className="dot" style={{ background: pl.pos === "GK" ? s : p, color: pl.pos === "GK" ? p : s }}>
               {pl.num}
               {l.captain && <span className="tag">C</span>}
-              {(l.pid === potm || sub?.pid === potm) && <span className="star" title="Player of the match">★</span>}
+              {(l.pid === potm || sub?.pid === potm) && <span className="star" title="Player of the match"><Star size={13} fill="currentColor" strokeWidth={0} /></span>}
             </span>
-            <span className="nm">{pl.name.replace(`${CLUB[code].short} `, "")}{l.goals ? ` ${"⚽".repeat(Math.min(3, l.goals))}` : ""}</span>
+            <span className="nm">{pl.name.replace(`${CLUB[code].short} `, "")}{l.goals ? ` ${"●".repeat(Math.min(3, l.goals))}` : ""}</span>
             <span className={`rt${l.rating >= 8 ? " hi" : l.rating < 6 ? " lo" : ""}`}>{l.rating.toFixed(1)}</span>
-            {sub && <span className="nm" style={{ opacity: 0.85 }}>↑{sub.on}′ No.{player(sub.pid).num} ({sub.rating.toFixed(1)})</span>}
+            {sub && <span className="nm" style={{ opacity: 0.85 }}>on {sub.on}′ No.{player(sub.pid).num} ({sub.rating.toFixed(1)})</span>}
           </div>
         );
       })}
@@ -90,7 +92,7 @@ function Timeline({ m, d }: { m: MatchResult; d: MatchDetail }) {
       min: g.min, side: g.side, k: `g${i}`,
       node: (
         <span>
-          ⚽ <strong>{shortName(g.scorer)}</strong>
+          <Ball /><strong>{shortName(g.scorer)}</strong>
           {g.pen && <span className="muted"> (pen)</span>}
           {g.assist && <span className="ev-sub"> · assist {shortName(g.assist)}</span>}
         </span>
@@ -98,7 +100,7 @@ function Timeline({ m, d }: { m: MatchResult; d: MatchDetail }) {
     })),
     ...d.subs.map((s, i) => ({
       min: s.min, side: s.side, k: `s${i}`,
-      node: <span className="ev-sub">⇄ {shortName(s.on)} for {shortName(s.off)}</span>,
+      node: <span className="ev-sub"><ArrowLeftRight size={12} className="ico" aria-label="Substitution" /> {shortName(s.on)} for {shortName(s.off)}</span>,
     })),
   ].sort((a, b) => a.min - b.min);
   return (
@@ -122,6 +124,17 @@ function Timeline({ m, d }: { m: MatchResult; d: MatchDetail }) {
   );
 }
 
+/** A small authored football glyph for goal events. */
+function Ball() {
+  return (
+    <svg className="ico" width="13" height="13" viewBox="0 0 16 16" aria-label="Goal" role="img">
+      <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M8 5.2 10.6 7 9.6 10H6.4L5.4 7Z" fill="currentColor" />
+      <path d="M8 5.2V1.6M10.6 7l3.3-1.2M9.6 10l2 2.8M6.4 10l-2 2.8M5.4 7 2.1 5.8" stroke="currentColor" strokeWidth="1.1" />
+    </svg>
+  );
+}
+
 export function scoreText(m: MatchResult) {
   return `${m.hg}–${m.ag}`;
 }
@@ -132,25 +145,31 @@ export function MatchRow({ m, label, defaultOpen }: { m: MatchResult; label?: st
   const ml = odds.top[0];
   const actualP = m.ft[0] <= 10 && m.ft[1] <= 10 ? odds.grid[m.ft[0]][m.ft[1]] : 0;
   return (
-    <div className="match">
+    <div className={`match${open ? " open" : ""}`}>
       <div className="match-head">
-        <span className="match-meta">
-          {label ?? (m.date ? new Date(m.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }) : "")}
-          <br />
-          {m.real ? <span className="pill real">REAL</span> : <span className="pill sim">SIM</span>}
-        </span>
-        <span className="home"><Club code={m.home} /></span>
-        <span className="score">
-          {scoreText(m)}
-          {(m.aet || m.pens) && <small>{m.pens ? `pens ${m.pens[0]}–${m.pens[1]}` : "a.e.t."}</small>}
-        </span>
-        <span><Club code={m.away} /></span>
-        <button className="expander" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
-          {open ? "▴" : "▾"} <span className="vh">Lineups & timeline</span><span aria-hidden="true">Details</span>
-        </button>
+        <div className="mt-main">
+          <div className="ticket-head">
+            <span>{label ?? (m.date ? new Date(m.date).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }) : "")}</span>
+            <span>{m.venue === "neutral" ? "Madrid · neutral" : venueOf(m.home)}</span>
+          </div>
+          <div className="mt-clubs">
+            <span className="mt-side"><span className="iata">{m.home}</span><Club code={m.home} short size={18} /></span>
+            <span className="flight" aria-hidden="true"><Plane size={14} strokeWidth={2} /></span>
+            <span className="mt-side r"><span className="iata">{m.away}</span><Club code={m.away} short size={18} /></span>
+          </div>
+        </div>
+        <div className="mt-stub">
+          <span className="carbon big">{scoreText(m)}</span>
+          {(m.aet || m.pens) && <span className="field-l">{m.pens ? `pens ${m.pens[0]}–${m.pens[1]}` : "a.e.t."}</span>}
+          {m.real ? <span className="punch">Played</span> : <span className="pill sim">Simulated</span>}
+          <button className="expander" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+            <span className="vh">Lineups & timeline for {CLUB[m.home].name} v {CLUB[m.away].name}</span><span aria-hidden="true">Details</span> <ChevronDown size={15} aria-hidden="true" />
+          </button>
+        </div>
       </div>
       {open && (
         <div className="match-body">
+          <Plate city={m.venue === "neutral" ? "madrid" : CLUB_CITY[m.home]} className="mt-plate" />
           <div className="stack">
             <div>
               <div className="kicker">Pre-match odds</div>
@@ -174,7 +193,7 @@ export function MatchRow({ m, label, defaultOpen }: { m: MatchResult; label?: st
             <div>
               <div className="row between" style={{ marginBottom: 6 }}>
                 <span className="kicker">Lineups · {FORMATION} v {FORMATION}</span>
-                <span className="small muted">★ {shortName(m.detail.potm)}</span>
+                <span className="small muted row" style={{ gap: 4 }}><Star size={13} fill="currentColor" strokeWidth={0} aria-label="Player of the match" /> {shortName(m.detail.potm)}</span>
               </div>
               <div className="pitches">
                 <Pitch lineup={m.detail.home} code={m.home} potm={m.detail.potm} />
